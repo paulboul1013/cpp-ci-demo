@@ -1,0 +1,19 @@
+Start testing: Aug 08 16:53 CST
+----------------------------------------------------------
+1/1 Testing: cal_test
+1/1 Test: cal_test
+Command: "/home/paulboul1013/cpp-ci-demo/build/test_cal"
+Directory: /home/paulboul1013/cpp-ci-demo/build
+"cal_test" start time: Aug 08 16:53 CST
+Output:
+----------------------------------------------------------
+All tests passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cal_test" end time: Aug 08 16:53 CST
+"cal_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Aug 08 16:53 CST

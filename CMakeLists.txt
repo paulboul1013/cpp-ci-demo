@@ -2,41 +2,93 @@ cmake_minimum_required(VERSION 3.20)
 
 project(cpp_ci_demo LANGUAGES CXX)
 
+# --------------------------------------------------
+# C++ standard
+# --------------------------------------------------
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_library(cal
-    src/cal.cpp
+
+# --------------------------------------------------
+# GoogleTest
+# --------------------------------------------------
+
+include(FetchContent)
+
+FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/v1.17.0.zip
 )
 
-target_include_directories(cal
-    PUBLIC include
+FetchContent_MakeAvailable(googletest)
+
+
+# --------------------------------------------------
+# Production library
+# --------------------------------------------------
+
+add_library(account_service
+    src/account_service.cpp
 )
 
-target_compile_options(cal PRIVATE
-    -Wall
-    -Wextra
-    -Wpedantic
+target_include_directories(
+    account_service
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-add_executable(app
+target_compile_options(
+    account_service
+    PRIVATE
+        -Wall
+        -Wextra
+        -Wpedantic
+)
+
+
+# --------------------------------------------------
+# Application
+# --------------------------------------------------
+
+add_executable(
+    app
     src/main.cpp
 )
 
-target_link_libraries(app PRIVATE cal)
+target_link_libraries(
+    app
+    PRIVATE
+        account_service
+)
+
+
+# --------------------------------------------------
+# Testing
+# --------------------------------------------------
 
 enable_testing()
 
-add_executable(test_cal
-    tests/test_cal.cpp
+add_executable(
+    test_account_service
+    tests/test_account_service.cpp
 )
 
 target_link_libraries(
-    test_cal
-    PRIVATE cal
+    test_account_service
+    PRIVATE
+        account_service
+        GTest::gtest_main
 )
 
-add_test(
-    NAME cal_test
-    COMMAND test_cal
+
+# --------------------------------------------------
+# GoogleTest + CTest integration
+# --------------------------------------------------
+
+include(GoogleTest)
+
+gtest_discover_tests(
+    test_account_service
 )

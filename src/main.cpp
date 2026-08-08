@@ -1,7 +1,9 @@
-#include "cal.h"
+#include "account_service.h"
 
 #include <iostream>
 
 int main() {
-    std::cout << add(10, 20) << '\n';
+    std::cout << "Account Service App\n";
+
+    return 0;
 }
